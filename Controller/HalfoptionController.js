@@ -106,3 +106,15 @@ export const HalfOptionControllerSingle = expressAsyncHandler(async (req, res) =
    }
 
 })
+
+
+export const getHalfoptionSearch = expressAsyncHandler(async (req, res) => {
+    try {
+        const data = await halfoptionData.find({ $or: [{ HalfOption: { '$regex': req.query.searchQ } }, { Wall: { '$regex': req.query.searchQ } }] })
+        if (data) {
+            return res.status(200).json({message:"data found",data})
+        }
+    } catch (error) {
+      return res.status(404).json({message:"No data found"})
+    }
+  })

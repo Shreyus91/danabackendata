@@ -1,5 +1,5 @@
 import express from 'express'
-import { DeleteabsDataData, GetAllabsData, GetSingleAbsData, PostabsData, UpdateabsDataData } from '../Controller/ABSController.js'
+import { DeleteabsDataData, getAbsSearch, GetAllabsData, GetSingleAbsData, PostabsData, UpdateabsDataData } from '../Controller/ABSController.js'
 
 const ABSRouter = express.Router()
 
@@ -22,6 +22,10 @@ ABSRouter.put('/absdata', UpdateabsDataData)
 
 // delete bare drawing Number
 
-ABSRouter.put('/absdatadelete',DeleteabsDataData)
+ABSRouter.put('/absdatadelete', DeleteabsDataData)
+
+// search
+ABSRouter.get('/asearch',getAbsSearch)
+
 
 export default ABSRouter

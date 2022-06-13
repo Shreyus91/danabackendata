@@ -1,5 +1,6 @@
 
 import express from 'express'
+import { getBracketoptionSearch } from '../Controller/BracketOptionController.js'
 import { DeleteBrkFlgOption, GetBrkFlgOption, GetSingleBrkFlgOption, PostBrkFlgOption, UpdateBrkFlgOption } from '../Controller/BrkFlgOptionModel.js'
 
 const BrkFlgOptionRouter = express.Router()
@@ -24,4 +25,6 @@ BrkFlgOptionRouter.put('/brkflgoptiondata', UpdateBrkFlgOption)
 
 BrkFlgOptionRouter.put('/brkflgoptiondatadelete',DeleteBrkFlgOption)
 
+// search
+BrkFlgOptionRouter.get('/dsearch',getBracketoptionSearch)
 export default BrkFlgOptionRouter

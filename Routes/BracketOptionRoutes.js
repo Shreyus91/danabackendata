@@ -1,5 +1,5 @@
 import express from 'express'
-import { BracketOptionControllerPost, deleteBracketOptionData, GetAllBracketOptionData, GetSingleBracketOptionData, UpdateBracketOptionData } from '../Controller/BracketOptionController.js'
+import { BracketOptionControllerPost, deleteBracketOptionData, GetAllBracketOptionData, getBracketoptionSearch, GetSingleBracketOptionData, UpdateBracketOptionData } from '../Controller/BracketOptionController.js'
 
 const BracketOptionRouter = express.Router()
 
@@ -23,4 +23,6 @@ BracketOptionRouter.put('/bracketoptiondata', UpdateBracketOptionData)
 
 BracketOptionRouter.put('/bracketoptiondatadelete',deleteBracketOptionData)
 
+// search
+BracketOptionRouter.get('/csearch',getBracketoptionSearch)
 export default BracketOptionRouter

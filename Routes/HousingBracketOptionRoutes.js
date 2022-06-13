@@ -1,5 +1,5 @@
 import express from 'express'
-import { housingBracketOptionControllerCreate, housingBracketOptionControllerDelete, housingBracketOptionControllerRead, housingBracketOptionControllerSingle, housingBracketOptionControllerUpdate } from '../Controller/HousingBracketOptionController.js'
+import { getHousingSearch, housingBracketOptionControllerCreate, housingBracketOptionControllerDelete, housingBracketOptionControllerRead, housingBracketOptionControllerSingle, housingBracketOptionControllerUpdate } from '../Controller/HousingBracketOptionController.js'
 
 
 const HousingBracketDataRouter = express.Router();
@@ -23,4 +23,6 @@ HousingBracketDataRouter.put('/housingbracketoptiondata',housingBracketOptionCon
 
 HousingBracketDataRouter.put('/housingbracketoptiondatadelete',housingBracketOptionControllerDelete)
 
+// search
+HousingBracketDataRouter.get('/gsearch',getHousingSearch)
 export default HousingBracketDataRouter

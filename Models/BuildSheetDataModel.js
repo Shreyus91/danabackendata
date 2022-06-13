@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 
 const BuildSheetSchema = mongoose.Schema({
-    AxleHousingPartNo: { type: String, Unique: true },
+    AxleHousingPartNo: { type: String, required: true ,unique:true },
     ServiceHousing:{type:String},
     Model:{type:String},
     OriginalWorkOrder:{type:String},

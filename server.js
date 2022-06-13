@@ -9,15 +9,16 @@ import BracketOptionRouter from './Routes/BracketOptionRoutes.js'
 import BareDrawingNumberRouter from './Routes/BareDrawingNumberRoutes.js'
 import ABSRouter from './Routes/ABSRoutes.js'
 import BuildSheetDataRouter from './Routes/BuildSheetData.js'
+import userRouter from './Routes/userRoutes.js'
+import cors from 'cors'
 const app = express()
-app.get('/cors', (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.send({ "msg": "This has CORS enabled 🎈" })
-    })
 
+
+    app.use(cors())
 app.use(express.json())
 
 connectDatabase()
+
 
 app.get('/', (req, res) => {
     res.send('app is connected')
@@ -55,7 +56,11 @@ app.use('/api',ABSRouter)
 
 // buildsheet data api
 
-app.use('/api',BuildSheetDataRouter)
+app.use('/api', BuildSheetDataRouter)
+
+// user Data api
+
+app.use('/api',userRouter)
 
 
 

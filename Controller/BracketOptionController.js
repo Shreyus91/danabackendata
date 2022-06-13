@@ -32,7 +32,9 @@ export const BracketOptionControllerPost = expressAsyncHandler(async (req, res) 
 
 export const GetAllBracketOptionData = expressAsyncHandler(async (req, res) => {
     try {
-        const data = await BracketOptionData.find({})
+        const PageQuery = req.query.Pages
+        const skips = (PageQuery-1)*50
+        const data = await BracketOptionData.find().skip(skips).limit(50)
         if (data) {
             return res.status(200).json({message:"All data found",data})
         }
@@ -104,3 +106,15 @@ export const deleteBracketOptionData = expressAsyncHandler(async(req,res)=>{
         
     }
 })
+
+
+export const getBracketoptionSearch = expressAsyncHandler(async (req, res) => {
+    try {
+        const data = await BracketOptionData.find({ $or: [{ BracketOption: { '$regex': req.query.searchQ } }, { TRod: { '$regex': req.query.searchQ } }, { SArm: { '$regex': req.query.searchQ } }, { LArm: { '$regex': req.query.searchQ } }] })
+        if (data) {
+            return res.status(200).json({message:"data found",data})
+        }
+    } catch (error) {
+      return res.status(404).json({message:"No data found"})
+    }
+  })

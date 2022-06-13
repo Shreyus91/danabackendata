@@ -107,3 +107,17 @@ export const DeleteabsDataData = expressAsyncHandler(async (req, res) => {
         return res.status(500).json({message:"Internal Server Error"})
     }
 })
+
+
+export const getAbsSearch = expressAsyncHandler(async (req, res) => {
+    console.log(req.query.searchQ)
+
+    try {
+        const data = await absData.find({ $or: [{ ABS: { '$regex': req.query.searchQ } }, { BareDrawingNumber: { '$regex': req.query.searchQ } }, { Block: { '$regex': req.query.searchQ } }, { SOFf: { '$regex': req.query.searchQ } },{ BlIndex: { '$regex': req.query.searchQ } }] })
+        if (data) {
+            return res.status(200).json({message:"data found",data})
+        }
+    } catch (error) {
+      return res.status(404).json({message:"No data found"})
+    }
+  })

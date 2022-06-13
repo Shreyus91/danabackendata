@@ -5,7 +5,6 @@ const connectDatabase = async () => {
     const conn = await mongoose.connect('mongodb://localhost:27017/dana1', {
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      autoIndex: true
     });
 
     console.log(`MongoDB Connected`);

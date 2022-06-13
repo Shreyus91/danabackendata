@@ -107,3 +107,16 @@ export const housingBracketOptionControllerDelete = expressAsyncHandler(async(re
 
 
 })
+
+
+
+export const getHousingSearch = expressAsyncHandler(async (req, res) => {
+    try {
+        const data = await hboptionData.find({ $or: [{ PartNo: { '$regex': req.query.searchQ } }, { BracketOption: { '$regex': req.query.searchQ } }] })
+        if (data) {
+            return res.status(200).json({message:"data found",data})
+        }
+    } catch (error) {
+      return res.status(404).json({message:"No data found"})
+    }
+  })

@@ -1,5 +1,5 @@
 import express from 'express'
-import { HalfoptionControllerCreate, HalfoptionControllerDelete, HalfoptionControllerRead, HalfOptionControllerSingle, HalfoptionControllerUpdate } from '../Controller/HalfoptionController.js'
+import { getHalfoptionSearch, HalfoptionControllerCreate, HalfoptionControllerDelete, HalfoptionControllerRead, HalfOptionControllerSingle, HalfoptionControllerUpdate } from '../Controller/HalfoptionController.js'
 import halfoptionData from '../Models/HalfOptionModel.js'
 
 const halfoptionRoute = express.Router()
@@ -24,4 +24,6 @@ halfoptionRoute.put('/hafoptiondatadelete', HalfoptionControllerDelete)
 
 halfoptionRoute.get('/hafoptiondata/:id',HalfOptionControllerSingle)
 
+// search
+halfoptionRoute.get('/fsearch',getHalfoptionSearch)
 export default halfoptionRoute

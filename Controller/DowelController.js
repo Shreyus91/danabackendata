@@ -5,7 +5,6 @@ import DowelData from "../Models/DowelModel.js";
 
 
 export const DowellPost = expressAsyncHandler(async (req, res) => {
-    console.log(req.body)
     
     const { Dowel, DowelPN, FTOff, Spacing } = req.body.data
     
@@ -32,8 +31,9 @@ export const DowellPost = expressAsyncHandler(async (req, res) => {
 // get Dowell data
 
 export const DowellGet = expressAsyncHandler(async (req, res) => {
-    const data = await DowelData.find({})
-
+    const PageQuery = req.query.Pages
+    const skips = (PageQuery-1)*50
+    const data = await DowelData.find().skip(skips).limit(50)
     try {
         if (data) {
             return res.status(200).json({message:"Dowell data found",data})
@@ -104,4 +104,19 @@ export const DowellDelete = expressAsyncHandler(async (req, res) => {
    } catch (error) {
        return res.status(500).json({message:'Internal Server Error',error})
    }
+})
+
+// search controller
+
+export const getDowellSearch = expressAsyncHandler(async (req, res) => {
+
+  try {
+      const data = await DowelData.find({ $or: [{ Dowel: { '$regex': req.query.searchQ } }, { DowelPN: { '$regex': req.query.searchQ } }, { FTOff: { '$regex': req.query.searchQ } }, { Spacing: { '$regex': req.query.searchQ } }] })
+      if (data) {
+          return res.status(200).json({message:"data found",data})
+      }
+  } catch (error) {
+      
+    return res.status(404).json({message:"No  found"})
+  }
 })

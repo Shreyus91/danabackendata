@@ -1,5 +1,5 @@
 import express from 'express'
-import { DeleteBareDrawingNumberData, GetAllBareDrawingNumber, GetSingleBareDrawingData, PostBareDrawingNumber, UpdateBareDrawingNumberData } from '../Controller/BareDrawingNumberController.js'
+import { DeleteBareDrawingNumberData, GetAllBareDrawingNumber, getBareDrawingSearch, GetSingleBareDrawingData, PostBareDrawingNumber, UpdateBareDrawingNumberData } from '../Controller/BareDrawingNumberController.js'
 
 const BareDrawingNumberRouter = express.Router()
 
@@ -24,4 +24,6 @@ BareDrawingNumberRouter.put('/baredrawingnumberdata', UpdateBareDrawingNumberDat
 
 BareDrawingNumberRouter.put('/baredrawingnumberdatadelete',DeleteBareDrawingNumberData)
 
+// search
+BareDrawingNumberRouter.get('/bsearch',getBareDrawingSearch)
 export default BareDrawingNumberRouter

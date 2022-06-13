@@ -32,8 +32,11 @@ export const PostBrkFlgOption = expressAsyncHandler(async (req, res) => {
 // get break flange option data
 
 export const GetBrkFlgOption = expressAsyncHandler(async (req, res) => {
-    const data = await brkflgoptionData.find({})
+   
     try {
+        const PageQuery = req.query.Pages
+        const skips = (PageQuery-1)*50
+        const data = await brkflgoptionData.find().skip(skips).limit(50)
         if (data) {
             return res.status(200).json({message:"All data found",
             data})
@@ -110,3 +113,14 @@ export const DeleteBrkFlgOption = expressAsyncHandler(async (req, res) => {
         return res.status(500).json({message:"internal server Error"})
     }
 })
+
+export const getBrkFLgOptionSearch = expressAsyncHandler(async (req, res) => {
+    try {
+        const data = await brkflgoptionData.find({ $or: [{ BrkFlgOption: { '$regex': req.query.searchQ } }, { FLOff: { '$regex': req.query.searchQ } }, { OD: { '$regex': req.query.searchQ } }, { Pilot: { '$regex': req.query.searchQ } }, { InOD: { '$regex': req.query.searchQ } }, { BCDiam: { '$regex': req.query.searchQ } }, { Index: { '$regex': req.query.searchQ } }, { Size: { '$regex': req.query.searchQ } }, { Num: { '$regex': req.query.searchQ } }] })
+        if (data) {
+            return res.status(200).json({message:"data found",data})
+        }
+    } catch (error) {
+      return res.status(404).json({message:"No data found"})
+    }
+  })

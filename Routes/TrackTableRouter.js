@@ -1,5 +1,5 @@
 import express from 'express'
-import { TrackTableControllerRead, TracktableControllersCreate, TrackTableControllerSingleRead, TrackTableControllerUpdate, trackTableDataControllerDelete } from '../Controller/TrackTableController.js';
+import { getTrackSearch, TrackTableControllerRead, TracktableControllersCreate, TrackTableControllerSingleRead, TrackTableControllerUpdate, trackTableDataControllerDelete } from '../Controller/TrackTableController.js';
 
 
 
@@ -29,4 +29,6 @@ trackTableRouter.put('/tracktabledata',TrackTableControllerUpdate)
 
 trackTableRouter.put('/tracktabledata/delete',trackTableDataControllerDelete)
 
+// search
+trackTableRouter.get('/isearch',getTrackSearch)
 export default trackTableRouter

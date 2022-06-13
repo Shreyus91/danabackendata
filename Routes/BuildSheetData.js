@@ -1,5 +1,5 @@
 import express from 'express'
-import { BuildSheetDataDelete, BuildSheetDataGet, BuildSheetDataGetSingle, BuildSheetDataPost, BuildSheetDataUpdate } from '../Controller/BuildSheetDataController.js'
+import { BuildSheetDataDelete, BuildSheetDataGet, BuildSheetDataGetSingle, BuildSheetDataPost, BuildSheetDataUpdate, getBuildSearch } from '../Controller/BuildSheetDataController.js'
 
 
 const BuildSheetDataRouter = express.Router()
@@ -22,5 +22,8 @@ BuildSheetDataRouter.put('/BuildSheetDatadata', BuildSheetDataUpdate)
 
 BuildSheetDataRouter.put('/BuildSheetDatadatadelete',BuildSheetDataDelete)
 
+
+// search
+BuildSheetDataRouter.get('/esearch',getBuildSearch)
 
 export default BuildSheetDataRouter

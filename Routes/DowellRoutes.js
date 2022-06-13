@@ -1,5 +1,5 @@
 import express from 'express'
-import { DowellDelete, DowellGet, DowellGetSingle, DowellPost, DowellUpdate } from '../Controller/DowelController.js'
+import { DowellDelete, DowellGet, DowellGetSingle, DowellPost, DowellUpdate, getDowellSearch } from '../Controller/DowelController.js'
 
 const DowellRouter = express.Router()
 
@@ -19,7 +19,11 @@ DowellRouter.put('/dowelldata', DowellUpdate)
 
 // delete data
 
-DowellRouter.put('/dowelldatadelete',DowellDelete)
+DowellRouter.put('/dowelldatadelete', DowellDelete)
+
+// search router
+
+DowellRouter.get('/mearch',getDowellSearch)
 
 
 export default DowellRouter

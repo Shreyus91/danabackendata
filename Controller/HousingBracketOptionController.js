@@ -30,17 +30,20 @@ export const housingBracketOptionControllerCreate = expressAsyncHandler(async (r
 // read housing bracket option data 
 
 export const housingBracketOptionControllerRead = expressAsyncHandler(async(req,res)=>{
+    const PageQuery = parseInt(req.query.Page)
+    const skips = (PageQuery-1)*50
+    console.log(skips)
+    const data = await hboptionData.find().skip(skips).limit(50)
+    console.log(data)
     try {
-        const data = await hboptionData.find({})
-
-        if(data){
-            return res.status(200).json({message:"Getting All housing Bracket option data",meta:data})
+        if (data) {
+            return res.status(200).json({message:"Dowell data found",data})
         }
-
-        return res.status(400).json({error:"data not found"})
-
+        else {
+            return res.status(400).json({message:"data not found"})
+        }
     } catch (error) {
-        return res.status(500).json({message:"some error occured",error})
+        return res.status(500).json({message:"Internal server error",error})
     }
 })
 

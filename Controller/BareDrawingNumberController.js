@@ -33,20 +33,19 @@ export const PostBareDrawingNumber = expressAsyncHandler(async (req,res) => {
 
 export const GetAllBareDrawingNumber = expressAsyncHandler(async (req, res) => {
   
+    const PageQuery = parseInt(req.query.Pages)
+    const skips = (PageQuery-1)*50
+    console.log(req.query)
+    const data = await baredrawignoData.find().skip(skips).limit(50)
     try {
-        const PageQuery = req.query.Pages
-        const skips = (PageQuery-1)*50
-        const data = await baredrawignoData.find().skip(skips).limit(50)
         if (data) {
-            return res.status(200).json({message:"Data found Successfully",data})
+            return res.status(200).json({message:"Dowell data found",data})
         }
         else {
-            return res.status(400).json({message:"Data not found"})
+            return res.status(400).json({message:"data not found"})
         }
     } catch (error) {
-
-        return res.status(500).json({message:"Internal Server Error"})
-        
+        return res.status(500).json({message:"Internal server error",error})
     }
 })
 

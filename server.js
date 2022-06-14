@@ -21,7 +21,7 @@ connectDatabase()
 
 
 app.get('/', (req, res) => {
-    res.send('app is connected')
+    res.send('Dana New App is connected')
 })
 
 

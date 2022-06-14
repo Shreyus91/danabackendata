@@ -92,20 +92,20 @@ export const BuildSheetDataPost = expressAsyncHandler(async (req, res) => {
 export const BuildSheetDataGet = expressAsyncHandler(async (req, res) => {
   
 
-  try {
-    const PageQuery = req.query.Pages
-  const skips = (PageQuery-1)*50
-  const data = await BuildSheetData.find().skip(skips).limit(50)
-    if (data) {
-      return res
-        .status(200)
-        .json({ message: "BuildSheetData data found", data });
-    } else {
-      return res.status(400).json({ message: "data not found" });
+  const PageQuery = parseInt(req.query.Page)
+    const skips = (PageQuery-1)*50
+    console.log(skips)
+    const data = await BuildSheetData.find().skip(skips).limit(50)
+    try {
+        if (data) {
+            return res.status(200).json({message:"Dowell data found",data})
+        }
+        else {
+            return res.status(400).json({message:"data not found"})
+        }
+    } catch (error) {
+        return res.status(500).json({message:"Internal server error",error})
     }
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
-  }
 });
 
 // read single data BuildSheetData

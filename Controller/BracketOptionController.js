@@ -31,18 +31,19 @@ export const BracketOptionControllerPost = expressAsyncHandler(async (req, res) 
 // Get All Bracket Option data
 
 export const GetAllBracketOptionData = expressAsyncHandler(async (req, res) => {
+    const PageQuery = parseInt(req.query.Pages)
+    const skips = (PageQuery-1)*50
+    console.log(skips)
+    const data = await BracketOptionData.find().skip(skips).limit(50)
     try {
-        const PageQuery = req.query.Pages
-        const skips = (PageQuery-1)*50
-        const data = await BracketOptionData.find().skip(skips).limit(50)
         if (data) {
-            return res.status(200).json({message:"All data found",data})
+            return res.status(200).json({message:"Dowell data found",data})
         }
         else {
-            return res.status(400).json({message:"No data found"})
+            return res.status(400).json({message:"data not found"})
         }
     } catch (error) {
-        return res.status(500).json({message:"Internal Server Error"})
+        return res.status(500).json({message:"Internal server error",error})
     }
 })
 

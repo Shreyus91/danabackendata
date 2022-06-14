@@ -28,15 +28,16 @@ export const DowellPost = expressAsyncHandler(async (req, res) => {
 
 })
 
-// get Dowell data
+// get Dowel data
 
 export const DowellGet = expressAsyncHandler(async (req, res) => {
-    const PageQuery = req.query.Pages
+    const PageQuery = parseInt(req.query.Page)
     const skips = (PageQuery-1)*50
+    console.log(skips)
     const data = await DowelData.find().skip(skips).limit(50)
     try {
         if (data) {
-            return res.status(200).json({message:"Dowell data found",data})
+            return res.status(200).json({message:"Dowel data found",data})
         }
         else {
             return res.status(400).json({message:"data not found"})
@@ -46,7 +47,7 @@ export const DowellGet = expressAsyncHandler(async (req, res) => {
     }
 })
 
-// read single data dowell
+// read single data dowel
 
 export const DowellGetSingle = expressAsyncHandler(async (req,res) => {
     const singleid = req.params.id
@@ -54,7 +55,7 @@ export const DowellGetSingle = expressAsyncHandler(async (req,res) => {
         if (singleid) {
             const data = await DowelData.findById(singleid)
             if (data) {
-                return res.status(200).json({message:"Dowell single data found",data})
+                return res.status(200).json({message:"Dowel single data found",data})
             }
             else {
                 return res.status(400).json({message:"Single data not found"})
@@ -68,8 +69,10 @@ export const DowellGetSingle = expressAsyncHandler(async (req,res) => {
 // update dowell data
 
 export const DowellUpdate = expressAsyncHandler(async (req, res) => {
+   
     try {
         const { id,Dowel, DowelPN, FTOff, Spacing } = req.body.data
+
         if (id) {
             const data = await DowelData.findByIdAndUpdate(id, { Dowel, DowelPN, FTOff, Spacing },{new:true})
             if (data) {

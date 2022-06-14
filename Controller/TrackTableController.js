@@ -5,12 +5,10 @@ import tracktableData from "../Models/TrackTableModel.js";
 // create tractabledata controller
 
 export const TracktableControllersCreate = expressAsyncHandler(async (req, res) => {
-    const { track, BareDrawingNumber, OtoO, OAII } = req.body.data
-    console.log(req.body)
+    const { Track, OtoO, OAII } = req.body.data
+    
     try {
-        const TrackDatas = new tracktableData({
-            Track:track,BareDrawingNumber,OtoO,OAII
-        });
+        const TrackDatas = new tracktableData({Track,OtoO,OAII});
         
         if (TrackDatas) {
             await TrackDatas.save((error, response) => {
@@ -27,17 +25,22 @@ export const TracktableControllersCreate = expressAsyncHandler(async (req, res) 
     }
 })
 
-// read tractabledata controller
+// read tracktabledata controller
 
 export const TrackTableControllerRead = expressAsyncHandler(async (req, res) => {
+    const PageQuery = parseInt(req.query.Page)
+    const skips = (PageQuery-1)*50
+    console.log(skips)
+    const data = await tracktableData.find().skip(skips).limit(50)
     try {
-        const data = await tracktableData.find({})
-
         if (data) {
-            res.status(200).json({message:"track Table data successfully read",data})
+            return res.status(200).json({message:"Track data found",data})
+        }
+        else {
+            return res.status(400).json({message:"data not found"})
         }
     } catch (error) {
-        res.status(500).json({error})
+        return res.status(500).json({message:"Internal server error",error})
     }
 })
 
@@ -64,21 +67,22 @@ console.log(singleid)
 // controller to update tracktable data
 
 export const TrackTableControllerUpdate = expressAsyncHandler(async (req, res) => {
-
-    const {id,track,BareDrawingNumber,OtoO,OAII} = await req.body.data
-    console.log(req.body)
-    console.log(track)
+   
     try {
+        const {id,Track,OtoO,OAII} = await req.body.data
         
         if (id) {
-            const updatedata = await tracktableData.findByIdAndUpdate(id, {Track:track,BareDrawingNumber,OtoO,OAII}, { new: true })
-            
-           return res.status(201).json({message:"successfully updated",updatedata})
+            const data = await tracktableData.findByIdAndUpdate(id, {Track,OtoO,OAII}, { new: true })
+            if(data){
+                return res.status(201).json({message:"successfully updated",data})
+            }
+            else {
+                return res.status(400).json({message:"no data found to update"})
+            }
+           
         }
 
-        return res.status(400).json({message:"no data found to update"})
-
-    } catch (error) {
+        } catch (error) {
         res.status(500).json({error})
     }
 })
@@ -86,16 +90,20 @@ export const TrackTableControllerUpdate = expressAsyncHandler(async (req, res) =
 // controller tpo delete tracktable data
 
 export const trackTableDataControllerDelete = expressAsyncHandler(async (req, res) => {
-    
-    const deleteid = await req.body.data
-        try {
+    try {
+    const deleteid = await req.body.id
+        
         if (deleteid) {
-            const deletedata = await tracktableData.findByIdAndDelete(deleteid)
-
-            return res.status(201).json({message:"data successfully deleted",deletedata})
+            const data = await tracktableData.findByIdAndDelete(deleteid)
+            if (data) {
+                return res.status(201).json({message:"data successfully deleted",deletedata})
         }
-        return res.status(400).json({message:"id not found to delete data"})
-    } catch (error) {
+    }
+        else{
+            return res.status(400).json({message:"id not found to delete data"})
+             } 
+}
+    catch (error) {
 
         return res.status(500).json({ error })
         
@@ -103,10 +111,10 @@ export const trackTableDataControllerDelete = expressAsyncHandler(async (req, re
     }
 })
 
-
+// search controller
 export const getTrackSearch = expressAsyncHandler(async (req, res) => {
     try {
-        const data = await hboptionData.find({ $or: [{ PartNo: { '$regex': req.query.searchQ } }, { BracketOption: { '$regex': req.query.searchQ } }] })
+        const data = await tracktableData.find({ $or: [{ Track: { '$regex': req.query.searchQ } }, { OtoO: { '$regex': req.query.searchQ } }, { OAII: { '$regex': req.query.searchQ } }] })
         if (data) {
             return res.status(200).json({message:"data found",data})
         }

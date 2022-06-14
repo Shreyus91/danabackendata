@@ -32,18 +32,19 @@ export const PostabsData = expressAsyncHandler(async (req,res) => {
 // get all data successfully
 
 export const GetAllabsData = expressAsyncHandler(async (req, res) => {
+    const PageQuery = parseInt(req.query.Page)
+    const skips = (PageQuery-1)*50
+    console.log(skips)
+    const data = await absData.find().skip(skips).limit(50)
     try {
-        const data = await absData.find({})
         if (data) {
-            return res.status(200).json({message:"Data found Successfully",data})
+            return res.status(200).json({message:"Dowell data found",data})
         }
         else {
-            return res.status(400).json({message:"Data not found"})
+            return res.status(400).json({message:"data not found"})
         }
     } catch (error) {
-
-        return res.status(500).json({message:"Internal Server Error"})
-        
+        return res.status(500).json({message:"Internal server error",error})
     }
 })
 
